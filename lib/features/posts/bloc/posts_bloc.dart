@@ -22,25 +22,22 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     try {
       var response = await client
           .get(Uri.parse('http://10.0.2.2:3000/api/v1/blocksbroken'));
-      print("breakpoint 1");
 
       List result = jsonDecode(response.body);
-      print("breakpoint 2");
+
+      print(result);
+
       for (int i = 0; i < result.length; i++) {
         PostDataUiModel post =
             PostDataUiModel.fromMap(result[i] as Map<String, dynamic>);
         posts.add(post);
+        print(post);
       }
-      print("breakpoint 3");
-
       print(posts);
 
       emit(PostFetchingSuccessfulState(posts: posts));
-      print("breakpoint 4");
-
     } catch (err) {
       log(err.toString());
-
     }
   }
 }
